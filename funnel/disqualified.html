@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Not a Fit Right Now — National Energy Renovations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #F3F0EA;
+  --white:    #FFFFFF;
+  --border:   rgba(30,26,16,0.10);
+  --accent:   #2A6B3F;
+  --accent-lt:#EBF4EE;
+  --accent-dk:#1D5230;
+  --amber:    #A0620A;
+  --amber-lt: #FEF3E2;
+  --text-1:   #1C1C14;
+  --text-2:   #585850;
+  --text-3:   #9A9A88;
+  --font-h:   'Poppins', system-ui, sans-serif;
+  --font-b:   'Poppins', system-ui, sans-serif;
+  --r:  10px; --r-lg: 16px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body { font-family: var(--font-b); background: var(--bg); color: var(--text-1); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+/* ---- HEADER ---- */
+.hdr {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 0.9rem clamp(1.25rem, 5vw, 3rem);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.hdr-logo img { height: 48px; width: auto; display: block; filter: drop-shadow(0 0 1px rgba(0,0,0,0.18)); }
+.hdr-phone { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-h); font-size: 0.9rem; font-weight: 700; color: var(--accent); letter-spacing: 0.02em; transition: color 0.15s; }
+.hdr-phone:hover { color: var(--accent-dk); }
+.hdr-phone svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- AMBER BANNER ---- */
+.amber-banner {
+  background: var(--amber-lt);
+  border-bottom: 1px solid rgba(160,98,10,0.15);
+  padding: 0.65rem clamp(1.25rem, 5vw, 3rem);
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  font-family: var(--font-h); font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.03em; text-transform: uppercase; color: var(--amber);
+}
+.amber-banner svg { width: 15px; height: 15px; stroke: var(--amber); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- MAIN ---- */
+main { flex: 1; padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 5vw, 3rem); }
+.inner { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
+
+/* ---- BACK ---- */
+.back-lnk {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.82rem; color: var(--text-3); font-weight: 500; transition: color 0.15s;
+}
+.back-lnk:hover { color: var(--text-2); }
+.back-lnk svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- HEADLINE BLOCK ---- */
+.hl-block { display: flex; flex-direction: column; gap: 0.75rem; }
+.hl-eyebrow { font-family: var(--font-h); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
+.hl-main { font-family: var(--font-h); font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: 0.01em; text-transform: uppercase; color: var(--text-1); line-height: 1.1; text-wrap: balance; }
+.hl-sub { font-size: 1rem; color: var(--text-2); line-height: 1.65; }
+
+/* ---- REASON BOX ---- */
+.reason-box {
+  background: var(--white); border: 1px solid var(--border);
+  border-left: 3px solid var(--amber);
+  border-radius: var(--r); padding: 1.4rem;
+  box-shadow: var(--shadow);
+}
+.reason-title { font-family: var(--font-h); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.02em; color: var(--text-1); margin-bottom: 0.6rem; }
+.reason-body { font-size: 0.875rem; color: var(--text-2); line-height: 1.72; }
+
+/* ---- ALTERNATIVES ---- */
+.alts-label { font-family: var(--font-h); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.75rem; }
+.alts { display: flex; flex-direction: column; gap: 0.6rem; }
+.alt-row {
+  display: flex; align-items: center; gap: 1rem;
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 1rem 1.15rem; transition: border-color 0.15s, background 0.15s;
+  box-shadow: var(--shadow);
+}
+.alt-row:hover { border-color: rgba(42,107,63,0.3); background: var(--accent-lt); }
+.alt-ico {
+  width: 36px; height: 36px; border-radius: var(--r);
+  background: var(--accent-lt); border: 1px solid rgba(42,107,63,0.15);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.alt-ico svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.alt-txt { flex: 1; }
+.alt-title { font-family: var(--font-h); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.01em; color: var(--text-1); margin-bottom: 0.1rem; }
+.alt-desc { font-size: 0.8rem; color: var(--text-2); line-height: 1.5; }
+.alt-arrow { width: 15px; height: 15px; stroke: var(--text-3); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+/* ---- IZZ CARD ---- */
+.izz-row {
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg);
+  padding: 1.4rem; display: flex; gap: 1.1rem; align-items: flex-start;
+  box-shadow: var(--shadow);
+}
+.izz-ava {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--bg); overflow: hidden; flex-shrink: 0;
+}
+.izz-ava img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.izz-ava-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.izz-ava-ph svg { width: 24px; height: 24px; stroke: var(--text-3); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.izz-info { flex: 1; }
+.izz-nm { font-family: var(--font-h); font-weight: 800; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.01em; color: var(--text-1); }
+.izz-rl { font-size: 0.75rem; color: var(--accent); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 0.6rem; }
+.izz-msg { font-size: 0.875rem; color: var(--text-2); line-height: 1.65; margin-bottom: 1rem; }
+.izz-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.izz-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.6rem 1rem; border-radius: var(--r);
+  font-family: var(--font-h); font-weight: 700; font-size: 0.82rem;
+  letter-spacing: 0.03em; text-transform: uppercase;
+  transition: all 0.15s;
+}
+.izz-btn.g { background: var(--accent); color: #fff; border: 1.5px solid transparent; }
+.izz-btn.g:hover { background: var(--accent-dk); }
+.izz-btn.o { background: transparent; color: var(--text-2); border: 1.5px solid var(--border); }
+.izz-btn.o:hover { border-color: var(--accent); color: var(--accent-dk); background: var(--accent-lt); }
+.izz-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- FOOTER ---- */
+footer {
+  background: var(--white); border-top: 1px solid var(--border);
+  padding: 1.25rem clamp(1.25rem, 5vw, 3rem);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+footer span { font-size: 0.75rem; color: var(--text-3); }
+footer a { font-size: 0.75rem; color: var(--text-3); transition: color 0.15s; }
+footer a:hover { color: var(--text-2); }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <a href="index.html" class="hdr-logo">
+    <img src="../pnglogo.png" alt="National Energy Renovations">
+  </a>
+  <a href="tel:+13365492801" class="hdr-phone">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.5 2 2 0 0 1 3.62 1.36h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
+    336-549-2801
+  </a>
+</header>
+
+<div class="amber-banner" id="amber-banner">
+  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  Not a match right now — but here's what we recommend
+</div>
+
+<main>
+  <div class="inner">
+
+    <a href="index.html" class="back-lnk">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to quiz
+    </a>
+
+    <div class="hl-block">
+      <div class="hl-eyebrow" id="eyebrow">Not a match right now</div>
+      <h1 class="hl-main" id="hl">Our current programs aren't the right fit — but let's keep the door open.</h1>
+      <p class="hl-sub" id="sub">That's not a "no forever" — it's a "not today." Here's what we honestly recommend based on where you're at right now.</p>
+    </div>
+
+    <div class="reason-box">
+      <div class="reason-title" id="reason-title">Why this program isn't the right fit right now</div>
+      <div class="reason-body" id="reason-body">Our programs have specific requirements to make sure the numbers work for every homeowner.</div>
+    </div>
+
+    <div>
+      <div class="alts-label">What you can do next</div>
+      <div class="alts" id="alts"></div>
+    </div>
+
+    <div class="izz-row">
+      <div class="izz-ava">
+        <img src="../Izz profile pic.png" alt="Izz Issa"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="izz-ava-ph" style="display:none">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+      </div>
+      <div class="izz-info">
+        <div class="izz-nm">Izz Issa</div>
+        <div class="izz-rl">Solar Consultant · NER</div>
+        <p class="izz-msg" id="izz-msg">Sometimes the numbers still work even when it seems like they won't. If you want a second opinion or just want to understand your options, I'm happy to chat.</p>
+        <div class="izz-btns">
+          <a href="tel:+13365492801" class="izz-btn g">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.5 2 2 0 0 1 3.62 1.36h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
+            Call Izz
+          </a>
+          <a href="sms:+13365492801" class="izz-btn o">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Text Izz
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <span>&copy; 2026 National Energy Renovations · Morrisville, NC</span>
+  <a href="index.html">Start over →</a>
+</footer>
+
+<script>
+const reason = new URLSearchParams(window.location.search).get('reason');
+
+const CONTENT = {
+  renter: {
+    eyebrow: 'Homeownership required',
+    hl: 'Our programs are for homeowners — but that doesn\'t have to be permanent.',
+    sub: 'Solar PPAs, equipment leases, and AI compute hosting programs require you to own the home where equipment is installed. If you\'re planning to buy, we\'d love to reconnect.',
+    reasonTitle: 'Why homeownership is required',
+    reasonBody: 'Solar systems and AI compute nodes are installed on and inside the property. Third-party-owned solar leases and equipment hosting programs require the property owner\'s consent and are tied to the home — not a renter\'s lease. If you own another property, or are planning to purchase soon, Izz can walk you through your options.',
+    alts: [
+      { icon: 'home', title: 'Planning to buy?', desc: 'Reach out to Izz before you close — he can help evaluate any home\'s solar potential ahead of purchase.', href: 'tel:+13365492801', label: 'Talk to Izz' },
+      { icon: 'retry', title: 'Come back when you\'re ready', desc: 'Bookmark this page and retake the quiz once you\'ve purchased your home.', href: 'index.html', label: 'Retake the quiz' }
+    ],
+    izzMsg: 'If you\'re seriously looking at buying a home in the Triangle area, I can actually help you evaluate solar potential before you close. No obligation — I just enjoy that conversation.'
+  },
+  credit: {
+    eyebrow: 'Credit score requirement',
+    hl: 'A 650+ credit score is needed right now — but this is fixable.',
+    sub: 'Most financing programs for solar and equipment hosting require a minimum credit score. The good news: credit can be improved, and the programs aren\'t going anywhere.',
+    reasonTitle: 'Why a 650+ score is required',
+    reasonBody: 'Solar financing and AI hosting equipment programs involve long-term payment agreements — typically 20–30 year terms. Lenders set minimum credit requirements to qualify for $0-down financing. A score below 650 doesn\'t mean you can\'t go solar, but it does limit the no-money-down options. A cash purchase is still available to anyone regardless of credit.',
+    alts: [
+      { icon: 'chart', title: 'Work on your credit', desc: 'Free tools like Credit Karma and Experian Boost can raise your score within 3–6 months.', href: 'https://www.creditkarma.com', label: 'Check Credit Karma', ext: true },
+      { icon: 'cash', title: 'Cash purchase — no credit needed', desc: 'Buying a system outright removes the credit requirement entirely and maximizes long-term returns.', href: 'tel:+13365492801', label: 'Ask about cash purchase' },
+      { icon: 'retry', title: 'Come back when your score improves', desc: 'Once you\'re above 650, Izz would love to run the numbers for you.', href: 'index.html', label: 'Retake the quiz' }
+    ],
+    izzMsg: 'Credit below 650 isn\'t the end of the road — sometimes a cash purchase makes sense, and other times we just need a few months. I\'m happy to talk through what\'s realistic for your situation.'
+  }
+};
+
+const ICONS = {
+  home:  `<svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  retry: `<svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>`,
+  chart: `<svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`,
+  cash:  `<svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>`,
+};
+
+const c = CONTENT[reason] || CONTENT['renter'];
+document.getElementById('eyebrow').textContent    = c.eyebrow;
+document.getElementById('hl').textContent         = c.hl;
+document.getElementById('sub').textContent        = c.sub;
+document.getElementById('reason-title').textContent = c.reasonTitle;
+document.getElementById('reason-body').textContent  = c.reasonBody;
+document.getElementById('izz-msg').textContent    = c.izzMsg;
+
+document.getElementById('alts').innerHTML = c.alts.map(a => `
+  <a href="${a.href}" class="alt-row" ${a.ext ? 'target="_blank" rel="noopener"' : ''}>
+    <div class="alt-ico">${ICONS[a.icon] || ICONS.home}</div>
+    <div class="alt-txt">
+      <div class="alt-title">${a.title}</div>
+      <div class="alt-desc">${a.desc}</div>
+    </div>
+    <svg class="alt-arrow" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>`).join('');
+</script>
+</body>
+</html>

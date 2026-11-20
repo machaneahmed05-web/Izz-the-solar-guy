@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>See If Your Home Qualifies — Izz Issa · National Energy Renovations</title>
+<meta name="description" content="Answer 6 quick questions and find out if your home qualifies for solar savings and AI compute hosting in North Carolina.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:          #F3F0EA;
+  --white:       #FFFFFF;
+  --surface:     #FDFCFA;
+  --border:      rgba(30,26,16,0.10);
+  --border-sel:  #2A6B3F;
+  --accent:      #2A6B3F;
+  --accent-lt:   #EBF4EE;
+  --accent-dark: #1D5230;
+  --text-1:  #1C1C14;
+  --text-2:  #585850;
+  --text-3:  #9A9A88;
+  --gold:    #C49A28;
+  --font-h:  'Poppins', system-ui, sans-serif;
+  --font-b:  'Poppins', system-ui, sans-serif;
+  --r:  10px;
+  --r-lg: 16px;
+  --shadow:   0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+  --shadow-h: 0 2px 8px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.08);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--font-b);
+  background: var(--bg);
+  color: var(--text-1);
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+input, button, select, textarea { font: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* ---- HEADER ---- */
+.hdr {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem clamp(1.25rem, 5vw, 2.5rem);
+  display: flex; align-items: center;
+  position: sticky; top: 0; z-index: 100;
+}
+.hdr-logo img {
+  height: 48px; width: auto; display: block;
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.18));
+}
+
+/* ---- PROGRESS BAR ---- */
+#progress-wrap {
+  height: 4px;
+  background: rgba(30,26,16,0.07);
+}
+#progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* ---- QUIZ CONTENT ---- */
+.quiz-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem 2rem;
+}
+@media (max-width: 540px) { .quiz-content { padding: 2rem 1.25rem 1.5rem; align-items: flex-start; } }
+
+#quiz-container {
+  width: 100%;
+  max-width: 520px;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+/* ---- FOOTER ---- */
+.quiz-foot {
+  padding: 0.9rem 1.5rem 1.25rem;
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.5rem; flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+}
+.foot-item {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.75rem; color: var(--text-3); font-weight: 500;
+}
+.foot-item svg { width: 12px; height: 12px; stroke: var(--text-3); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- STEP HEADER ---- */
+.step-top {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 1.4rem;
+}
+.step-back {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  background: none; border: none; cursor: pointer;
+  font-size: 0.8rem; color: var(--text-3); font-weight: 500;
+  transition: color 0.15s; padding: 0;
+}
+.step-back:hover { color: var(--text-2); }
+.step-back svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.step-counter {
+  margin-left: auto;
+  font-size: 0.75rem; color: var(--text-3); font-weight: 600; letter-spacing: 0.04em;
+}
+.step-hl {
+  font-family: var(--font-h);
+  font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+.step-hint {
+  font-size: 0.875rem; color: var(--text-3); line-height: 1.6; margin-bottom: 1.4rem;
+}
+
+/* ---- OPTION CARDS ---- */
+.opts { display: flex; flex-direction: column; gap: 0.55rem; }
+.opts.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
+.opts.g2.cols-5 { grid-template-columns: 1fr 1fr; }
+.opts.g2.cols-5 .opt:last-child { grid-column: 1 / -1; }
+@media (max-width: 480px) {
+  .opts.g2 { grid-template-columns: 1fr; }
+  .opts.g2.cols-5 .opt:last-child { grid-column: auto; }
+}
+
+.opt {
+  position: relative; display: flex; align-items: center; gap: 0.85rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r);
+  cursor: pointer; box-shadow: var(--shadow);
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s, transform 0.12s;
+  -webkit-tap-highlight-color: transparent; user-select: none;
+}
+.opt:hover { border-color: rgba(42,107,63,0.4); box-shadow: var(--shadow-h); transform: translateY(-1px); }
+.opt.selected { border-color: var(--accent); background: var(--accent-lt); box-shadow: 0 2px 10px rgba(42,107,63,0.12); }
+
+.opt-radio {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--border); background: var(--white);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+.opt:hover .opt-radio { border-color: var(--accent); }
+.opt.selected .opt-radio { border-color: var(--accent); background: var(--accent); }
+.opt-radio svg {
+  width: 10px; height: 10px; stroke: #fff; fill: none; stroke-width: 2.5;
+  stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0; transform: scale(0.5);
+  transition: opacity 0.15s, transform 0.15s;
+}
+.opt.selected .opt-radio svg { opacity: 1; transform: scale(1); }
+
+.opt-txt { flex: 1; }
+.opt-label { font-family: var(--font-h); font-weight: 600; font-size: 0.95rem; color: var(--text-1); line-height: 1.25; }
+.opt.selected .opt-label { color: var(--accent-dark); }
+.opt-meta { font-size: 0.78rem; color: var(--text-3); line-height: 1.4; margin-top: 0.1rem; }
+
+/* ---- CONTACT FORM ---- */
+.form-fields { display: flex; flex-direction: column; gap: 0.75rem; }
+.fg { display: flex; flex-direction: column; gap: 0.3rem; }
+.fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+@media (max-width: 480px) { .fg-row { grid-template-columns: 1fr; } }
+
+.fg label {
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-2);
+}
+.opt-tag { font-weight: 400; color: var(--text-3); text-transform: none; letter-spacing: 0; margin-left: 0.3rem; }
+
+.fg input {
+  padding: 0.8rem 0.95rem;
+  background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r);
+  color: var(--text-1); font-size: 0.95rem;
+  outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+  -webkit-appearance: none; box-shadow: var(--shadow);
+}
+.fg input::placeholder { color: var(--text-3); }
+.fg input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(42,107,63,0.10); }
+
+.form-submit {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 1rem 2rem; background: var(--accent); color: #fff;
+  font-family: var(--font-h); font-weight: 700; font-size: 1rem;
+  border: none; border-radius: var(--r); cursor: pointer; width: 100%; margin-top: 0.25rem;
+  box-shadow: var(--shadow);
+  transition: background 0.18s, transform 0.15s, box-shadow 0.18s;
+}
+.form-submit:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: var(--shadow-h); }
+.form-submit svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.form-note {
+  font-size: 0.75rem; color: var(--text-3); text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 0.35rem; margin-top: 0.4rem;
+}
+.form-note svg { width: 11px; height: 11px; stroke: var(--text-3); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <a href="index.html" class="hdr-logo">
+    <img src="../pnglogo.png" alt="National Energy Renovations">
+  </a>
+</header>
+
+<div id="progress-wrap"><div id="progress-fill"></div></div>
+
+<div class="quiz-content">
+  <div id="quiz-container"></div>
+</div>
+
+<footer class="quiz-foot">
+  <span class="foot-item">
+    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    Your info stays private
+  </span>
+  <span class="foot-item">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Takes about 60 seconds
+  </span>
+  <span class="foot-item">
+    <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.5 2 2 0 0 1 3.62 1.36h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
+    Call Izz — 336-549-2801
+  </span>
+</footer>
+
+<script>
+const STEPS = [
+  { type: 'intro' },
+  {
+    id: 'ownership', type: 'choice', num: '1 of 6',
+    headline: 'Do you own your home?',
+    hint: null, grid: false,
+    options: [
+      { id: 'own',  label: 'Yes — I own my home',  meta: 'Homeowner' },
+      { id: 'rent', label: "I'm currently renting", meta: 'Renter', disqualify: 'renter' }
+    ]
+  },
+  {
+    id: 'interest', type: 'choice', num: '2 of 6',
+    headline: "What are you most interested in?",
+    hint: "We handle both programs — pick what interests you most.",
+    grid: false,
+    options: [
+      { id: 'solar',   label: 'Solar PPA',         meta: 'Reduce your bill with $0 down'    },
+      { id: 'compute', label: 'AI Compute Hosting', meta: 'Earn up to $400/mo hosting a chip' },
+      { id: 'both',    label: 'Both Programs',      meta: "Let's look at all your options"   }
+    ]
+  },
+  {
+    id: 'credit', type: 'choice', num: '3 of 6',
+    headline: "What's your credit score range?",
+    hint: 'Most financing programs require a 650+ score.',
+    grid: true,
+    options: [
+      { id: '750plus',  label: '750 or above', meta: 'Excellent'      },
+      { id: '700_749',  label: '700 – 749',    meta: 'Good'           },
+      { id: '650_699',  label: '650 – 699',    meta: 'Fair'           },
+      { id: 'below650', label: 'Below 650',    meta: 'Building credit', disqualify: 'credit' }
+    ]
+  },
+  {
+    id: 'bill', type: 'choice', num: '4 of 6',
+    headline: "What's your average monthly electric bill?",
+    hint: 'Higher bills mean more potential savings with solar.',
+    grid: true,
+    options: [
+      { id: 'under100', label: 'Under $100',   meta: 'Lower usage'                   },
+      { id: '100_150',  label: '$100 – $150',  meta: 'Average household'             },
+      { id: '150_200',  label: '$150 – $200',  meta: 'Above average'                 },
+      { id: 'over200',  label: '$200 or more', meta: 'High usage — strong candidate' }
+    ]
+  },
+  {
+    id: 'utility', type: 'choice', num: '5 of 6',
+    headline: 'Which utility serves your home?',
+    hint: 'Your utility determines available programs and incentives.',
+    grid: true, gridClass: 'cols-5',
+    options: [
+      { id: 'duke',      label: 'Duke Energy',       meta: 'Most common in the Triangle'     },
+      { id: 'wake_elec', label: 'Wake Electric',     meta: 'Eastern Wake County'             },
+      { id: 'dominion',  label: 'Dominion Energy',   meta: 'Parts of NC & VA'                },
+      { id: 'municipal', label: 'Municipal / Other', meta: 'Town-owned utility'              },
+      { id: 'unsure',    label: "Not sure",          meta: "Izz will help you figure it out" }
+    ]
+  },
+  {
+    id: 'roof', type: 'choice', num: '6 of 6',
+    headline: 'How old is your roof?',
+    hint: 'Solar installations need a structurally sound roof.',
+    grid: true,
+    options: [
+      { id: 'under5', label: 'Under 5 years', meta: 'Excellent condition'              },
+      { id: '5_10',   label: '5 – 10 years',  meta: 'Good shape'                       },
+      { id: '10_15',  label: '10 – 15 years', meta: 'Still eligible for most programs' },
+      { id: '15plus', label: '15+ years',     meta: 'May need an assessment first'     }
+    ]
+  },
+  {
+    id: 'contact', type: 'form',
+    headline: "One last step.",
+    hint: "Izz reviews every submission personally and will reach out to confirm your eligibility. No obligation."
+  }
+];
+
+let cur = 0;
+let answers = {};
+const TOTAL = 6;
+
+const CHECK   = `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`;
+const ARROW   = `<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+const BACK_ICO = `<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>`;
+
+function buildChoice(s) {
+  const qn = parseInt(s.num);
+  const pct = Math.round((qn - 1) / TOTAL * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  const gridClass = s.grid ? ('g2' + (s.gridClass ? ' ' + s.gridClass : '')) : '';
+  const opts = s.options.map(o => `
+    <div class="opt" role="button" tabindex="0"
+         data-id="${o.id}" ${o.disqualify ? `data-dis="${o.disqualify}"` : ''}>
+      <div class="opt-radio">${CHECK}</div>
+      <div class="opt-txt">
+        <div class="opt-label">${o.label}</div>
+        ${o.meta ? `<div class="opt-meta">${o.meta}</div>` : ''}
+      </div>
+    </div>`).join('');
+  return `
+    <div class="step-top">
+      ${qn > 1 ? `<button class="step-back" onclick="goBack()">${BACK_ICO} Back</button>` : ''}
+      <span class="step-counter">Question ${s.num}</span>
+    </div>
+    <h2 class="step-hl">${s.headline}</h2>
+    ${s.hint ? `<p class="step-hint">${s.hint}</p>` : ''}
+    <div class="opts ${gridClass}">${opts}</div>`;
+}
+
+function buildForm(s) {
+  document.getElementById('progress-fill').style.width = '95%';
+  return `
+    <div class="step-top">
+      <button class="step-back" onclick="goBack()">${BACK_ICO} Back</button>
+      <span class="step-counter">Final Step</span>
+    </div>
+    <h2 class="step-hl">${s.headline}</h2>
+    <p class="step-hint">${s.hint}</p>
+    <div class="form-fields">
+      <div class="fg-row">
+        <div class="fg"><label for="f-name">Full Name</label><input id="f-name" type="text" placeholder="John Smith" autocomplete="name" required></div>
+        <div class="fg"><label for="f-phone">Phone Number</label><input id="f-phone" type="tel" placeholder="(919) 555-0100" autocomplete="tel" required></div>
+      </div>
+      <div class="fg"><label for="f-addr">Home Address</label><input id="f-addr" type="text" placeholder="123 Oak St, Raleigh, NC 27616" autocomplete="street-address" required></div>
+      <div class="fg"><label for="f-email">Email Address <span class="opt-tag">— optional</span></label><input id="f-email" type="email" placeholder="john@email.com" autocomplete="email"></div>
+      <button class="form-submit" onclick="submitForm()">${ARROW} Get My Results</button>
+      <p class="form-note">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Your info is never sold or shared.
+      </p>
+    </div>`;
+}
+
+function show(idx, dir) {
+  const c = document.getElementById('quiz-container');
+  const out = dir === 'back' ? 1 : -1;
+  c.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+  c.style.opacity = '0';
+  c.style.transform = `translateX(${out * 28}px)`;
+  setTimeout(() => {
+    const s = STEPS[idx];
+    if (s.type === 'choice') c.innerHTML = buildChoice(s);
+    else if (s.type === 'form') c.innerHTML = buildForm(s);
+    if (s.type === 'choice') {
+      c.querySelectorAll('.opt').forEach(el => {
+        el.addEventListener('click', () => pick(el, s));
+        el.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(el, s); }
+        });
+      });
+    }
+    c.style.transition = 'none';
+    c.style.transform = `translateX(${out * -28}px)`;
+    c.style.opacity = '0';
+    void c.offsetWidth;
+    c.style.transition = 'opacity 0.3s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1)';
+    c.style.transform = 'translateX(0)';
+    c.style.opacity = '1';
+  }, 190);
+}
+
+function pick(el, step) {
+  const id = el.dataset.id;
+  const dis = el.dataset.dis;
+  el.classList.add('selected');
+  if (dis) {
+    setTimeout(() => { window.location.href = 'disqualified.html?reason=' + dis; }, 400);
+    return;
+  }
+  answers[step.id] = id;
+  setTimeout(() => { cur++; show(cur); }, 340);
+}
+
+function goBack() {
+  if (cur > 1) { cur--; show(cur, 'back'); }
+}
+
+function submitForm() {
+  const name  = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const addr  = document.getElementById('f-addr').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  if (!name)  { document.getElementById('f-name').focus(); return; }
+  if (!phone) { document.getElementById('f-phone').focus(); return; }
+  if (!addr)  { document.getElementById('f-addr').focus(); return; }
+  sessionStorage.setItem('ner_lead', JSON.stringify({ ...answers, name, phone, addr, email, ts: new Date().toISOString() }));
+  document.getElementById('progress-fill').style.width = '100%';
+  window.location.href = 'calendar.html';
+}
+
+cur = 1;
+show(1);
+</script>
+</body>
+</html>

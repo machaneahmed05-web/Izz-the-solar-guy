@@ -1,0 +1,4 @@
+# Large video files excluded from git (exceed GitHub's 100MB limit)
+Solar VSL v1.mp4
+photos/IMG_1735.MOV
+photos/IMG_1736.MOV

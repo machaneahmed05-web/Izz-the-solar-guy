@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Your Free Consultation — Izz Issa · NER</title>
+<meta name="description" content="Pick a time for your free 40-minute consultation with Izz Issa at National Energy Renovations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #F3F0EA;
+  --white:    #FFFFFF;
+  --border:   rgba(30,26,16,0.10);
+  --accent:   #2A6B3F;
+  --accent-lt:#EBF4EE;
+  --accent-dk:#1D5230;
+  --text-1:   #1C1C14;
+  --text-2:   #585850;
+  --text-3:   #9A9A88;
+  --font-h:   'Poppins', system-ui, sans-serif;
+  --font-b:   'Poppins', system-ui, sans-serif;
+  --r:  10px; --r-lg: 16px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body { font-family: var(--font-b); background: var(--bg); color: var(--text-1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+/* ---- HEADER ---- */
+.hdr {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 0.75rem clamp(1.25rem, 5vw, 3rem);
+  display: flex; align-items: center;
+  position: sticky; top: 0; z-index: 100;
+}
+.hdr-logo img {
+  height: 48px; width: auto; display: block;
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.18));
+}
+
+/* ---- CELEBRATION HERO ---- */
+.celebrate {
+  background: linear-gradient(160deg, #1D5230 0%, #2A6B3F 55%, #3A8A54 100%);
+  padding: clamp(2.5rem, 7vw, 5rem) clamp(1.25rem, 5vw, 3rem) clamp(2rem, 5vw, 3.5rem);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* confetti canvas sits inside .celebrate */
+#confetti-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.celebrate-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+
+/* animated checkmark badge */
+.check-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 72px; height: 72px; border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  border: 2.5px solid rgba(255,255,255,0.5);
+  margin-bottom: 1.25rem;
+  animation: badgePop 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+.check-badge svg {
+  width: 36px; height: 36px; stroke: #fff; fill: none;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 48; stroke-dashoffset: 48;
+  animation: drawCheck 0.4s 0.4s ease forwards;
+}
+@keyframes badgePop {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+.celebrate-h1 {
+  font-family: var(--font-h);
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+  animation: slideUp 0.5s 0.15s cubic-bezier(0.16,1,0.3,1) both;
+}
+.celebrate-h2 {
+  font-family: var(--font-h);
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 600;
+  color: rgba(255,255,255,0.90);
+  line-height: 1.4;
+  max-width: 52ch; margin: 0 auto 0.75rem;
+  animation: slideUp 0.5s 0.22s cubic-bezier(0.16,1,0.3,1) both;
+}
+.celebrate-sub {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: rgba(255,255,255,0.80);
+  line-height: 1.65;
+  max-width: 50ch; margin: 0 auto 1.5rem;
+  animation: slideUp 0.5s 0.25s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* important note inside hero */
+.hero-note {
+  display: inline-flex; align-items: flex-start; gap: 0.65rem; text-align: left;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: var(--r); padding: 0.9rem 1.1rem;
+  font-size: 0.875rem; color: rgba(255,255,255,0.88); line-height: 1.6;
+  animation: slideUp 0.5s 0.35s cubic-bezier(0.16,1,0.3,1) both;
+  max-width: 52ch;
+}
+.hero-note svg {
+  flex-shrink: 0; margin-top: 0.1rem;
+  width: 16px; height: 16px; stroke: rgba(255,255,255,0.75); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.hero-note strong { color: #fff; font-weight: 600; }
+
+/* ---- PAGE ---- */
+.page {
+  max-width: 760px; margin: 0 auto;
+  padding: 2.5rem clamp(1.25rem, 5vw, 2rem) 3rem;
+}
+
+/* ---- CALENDAR BOX ---- */
+.cal-box {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow);
+}
+.cal-embed {
+  min-height: 560px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem; padding: 2.5rem; text-align: center;
+}
+.cal-ph-ico {
+  width: 56px; height: 56px; border-radius: var(--r);
+  background: var(--accent-lt); border: 1px solid rgba(42,107,63,0.15);
+  display: flex; align-items: center; justify-content: center; margin: 0 auto;
+}
+.cal-ph-ico svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.cal-ph-hl { font-family: var(--font-h); font-weight: 700; font-size: 1rem; color: var(--text-1); }
+.cal-ph-sub { font-size: 0.875rem; color: var(--text-2); max-width: 32ch; line-height: 1.6; }
+
+.cal-or-call {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 1rem 1.5rem; border-top: 1px solid var(--border); flex-wrap: wrap;
+}
+.cal-or-txt { flex: 1; font-size: 0.85rem; color: var(--text-2); }
+.cal-or-txt strong { color: var(--text-1); }
+.call-direct {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.65rem 1.1rem;
+  background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: var(--r); color: var(--text-1);
+  font-family: var(--font-h); font-weight: 700; font-size: 0.875rem;
+  transition: border-color 0.15s, background 0.15s; white-space: nowrap;
+}
+.call-direct:hover { border-color: var(--accent); background: var(--accent-lt); color: var(--accent-dk); }
+.call-direct svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---- FOOTER ---- */
+.foot {
+  margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+.foot span { font-size: 0.75rem; color: var(--text-3); }
+.foot a { font-size: 0.75rem; color: var(--text-3); transition: color 0.15s; }
+.foot a:hover { color: var(--text-2); }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <a href="index.html" class="hdr-logo">
+    <img src="../pnglogo.png" alt="National Energy Renovations">
+  </a>
+</header>
+
+<!-- CELEBRATION SECTION -->
+<section class="celebrate">
+  <canvas id="confetti-canvas"></canvas>
+  <div class="celebrate-inner">
+    <div class="check-badge">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h1 class="celebrate-h1">Your home looks like a strong fit!</h1>
+    <h2 class="celebrate-h2">Only 9% of homes actually qualify in NC — you're one of them, congrats! Next step you should...</h2>
+    <p class="celebrate-sub">Book your free 40-minute, no-pressure consultation with Izz below.</p>
+    <div class="hero-note">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span><strong>IMPORTANT:</strong> Homeowners who came from Facebook/Instagram and book a Free Consult with Izz directly from the calendar below NOW, will automatically get the $500 to cover their e-bills during the transition. This does not apply to people that booked over the phone. Go ahead and book your Free Consult BELOW...</span>
+    </div>
+  </div>
+</section>
+
+<main class="page">
+
+  <div class="cal-box">
+    <!-- ============================================================
+         REPLACE .cal-embed WITH YOUR BOOKING EMBED
+
+         Calendly:
+         <div class="calendly-inline-widget"
+              data-url="https://calendly.com/YOUR_USERNAME/40min"
+              style="min-width:320px;height:580px;"></div>
+         <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+
+         Cal.com:
+         <cal-inline calLink="YOUR_USERNAME/40min" style="width:100%;height:580px;overflow:scroll"></cal-inline>
+         <script type="module" src="https://cdn.cal.com/embed.js"></script>
+         ============================================================ -->
+    <div class="cal-embed">
+      <div class="cal-ph-ico">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <div class="cal-ph-hl">Calendar Embed Goes Here</div>
+      <div class="cal-ph-sub">Replace this block with your Calendly or Cal.com embed code</div>
+    </div>
+
+  </div>
+
+  <footer class="foot">
+    <span>&copy; 2026 National Energy Renovations · 11010 Lake Grove Blvd STE 100-135, Morrisville, NC 27560</span>
+    <a href="index.html">← Start Over</a>
+  </footer>
+
+</main>
+
+<script>
+/* ---- CONFETTI ---- */
+(function() {
+  const cv = document.getElementById('confetti-canvas');
+  const ctx = cv.getContext('2d');
+  cv.width  = cv.offsetWidth;
+  cv.height = cv.offsetHeight;
+  const cols = ['#ffffff','#C8F5D6','#FFE57A','#A8D8A8','#FFDDC1','#C9E8FF','#FFB347'];
+  const pts = Array.from({length: 130}, () => ({
+    x:  Math.random() * cv.width,
+    y: -16 - Math.random() * cv.height * 0.7,
+    w:  6 + Math.random() * 9,
+    h:  4 + Math.random() * 7,
+    c:  cols[Math.floor(Math.random() * cols.length)],
+    r:  Math.random() * Math.PI * 2,
+    rs: (Math.random() - 0.5) * 0.16,
+    vy: 1.4 + Math.random() * 2.6,
+    vx: (Math.random() - 0.5) * 1.8,
+  }));
+  const t0 = Date.now();
+  function draw() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    let any = false;
+    pts.forEach(p => {
+      p.y += p.vy; p.x += p.vx; p.r += p.rs;
+      const fade = Math.max(0, 1 - p.y / (cv.height + 20));
+      if (p.y < cv.height + 20) any = true;
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, fade * 2);
+      ctx.translate(p.x, p.y); ctx.rotate(p.r);
+      ctx.fillStyle = p.c;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+    if (any && Date.now() - t0 < 4500) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, cv.width, cv.height);
+  }
+  draw();
+})();
+</script>
+
+</body>
+</html>

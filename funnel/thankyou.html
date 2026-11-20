@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're Booked — National Energy Renovations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #F3F0EA;
+  --white:    #FFFFFF;
+  --border:   rgba(30,26,16,0.10);
+  --accent:   #2A6B3F;
+  --accent-lt:#EBF4EE;
+  --accent-dk:#1D5230;
+  --text-1:   #1C1C14;
+  --text-2:   #585850;
+  --text-3:   #9A9A88;
+  --gold:     #C49A28;
+  --font-h:   'Poppins', system-ui, sans-serif;
+  --font-b:   'Poppins', system-ui, sans-serif;
+  --r:  10px; --r-lg: 16px;
+  --shadow:   0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
+  --shadow-lg:0 8px 32px rgba(0,0,0,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body { font-family: var(--font-b); background: var(--bg); color: var(--text-1); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+/* ---- HEADER ---- */
+.hdr {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 0.75rem clamp(1.25rem, 5vw, 3rem);
+  display: flex; align-items: center;
+  position: sticky; top: 0; z-index: 100;
+}
+.hdr-logo img { height: 48px; width: auto; display: block; filter: drop-shadow(0 0 1px rgba(0,0,0,0.18)); }
+
+/* ---- SCROLL REVEAL ---- */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* ---- SECTION WRAPPERS ---- */
+.wrap    { max-width: 1060px; margin: 0 auto; padding: clamp(2.5rem,5vw,4rem) clamp(1.25rem,5vw,3rem); }
+.wrap-sm { max-width: 1060px; margin: 0 auto; padding: clamp(1.75rem,4vw,3rem) clamp(1.25rem,5vw,3rem); }
+.wrap-video { max-width: 900px; margin: 0 auto; padding: clamp(2rem,5vw,4rem) clamp(1.25rem,5vw,3rem); }
+.section-label { font-family: var(--font-h); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.5rem; }
+.section-hl { font-family: var(--font-h); font-size: clamp(1.4rem,3.5vw,2rem); font-weight: 700; color: var(--text-1); line-height: 1.15; margin-bottom: 0.5rem; }
+.section-sub { font-size: 0.95rem; color: var(--text-2); line-height: 1.65; margin-bottom: 1.75rem; }
+.divider { border: none; border-top: 1px solid var(--border); }
+
+/* ---- VSL SECTION ---- */
+.vsl-section { background: var(--white); border-bottom: 1px solid var(--border); }
+.vsl-headline {
+  font-family: var(--font-h); font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800;
+  line-height: 1.15; margin-bottom: 1.25rem;
+  background: linear-gradient(135deg, var(--accent) 0%, #3A9A54 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ============================================================
+   SMART VIDEO PLAYER (SVP)
+   ============================================================ */
+.svp-wrap {
+  position: relative; width: 100%; aspect-ratio: 16/9;
+  background: #000; border-radius: var(--r-lg); overflow: hidden;
+  box-shadow: var(--shadow-lg); cursor: pointer; user-select: none;
+}
+.svp-wrap video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block; object-fit: contain; background: #000;
+}
+
+/* Unmute overlay */
+.svp-unmute {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.42);
+  transition: opacity 0.35s, visibility 0.35s;
+}
+.svp-unmute.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.svp-unmute-btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.9rem 2rem; background: rgba(255,255,255,0.96); color: #111;
+  font-family: var(--font-h); font-weight: 700; font-size: clamp(0.875rem,2.5vw,1.05rem);
+  border: none; border-radius: 50px; cursor: pointer;
+  box-shadow: 0 4px 28px rgba(0,0,0,0.38);
+  animation: svpPulse 2.2s ease-in-out infinite;
+}
+@keyframes svpPulse {
+  0%,100% { transform: scale(1);    box-shadow: 0 4px 28px rgba(0,0,0,0.38); }
+  50%      { transform: scale(1.05); box-shadow: 0 6px 36px rgba(0,0,0,0.48); }
+}
+
+/* Speed savings banner */
+.svp-speed-banner {
+  position: absolute; top: 0.75rem; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.72); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.14); border-radius: 50px;
+  padding: 0.38rem 0.9rem 0.38rem 0.75rem;
+  font-size: 0.77rem; color: rgba(255,255,255,0.88);
+  z-index: 8; white-space: nowrap;
+  display: flex; align-items: center; gap: 0.6rem;
+  animation: svpBannerIn 0.5s 1.6s cubic-bezier(0.16,1,0.3,1) both;
+  transition: opacity 0.3s;
+}
+.svp-speed-banner.hidden { opacity: 0; pointer-events: none; }
+.svp-speed-banner strong { color: #7EE8A2; }
+@keyframes svpBannerIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.svp-banner-switch {
+  background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.7); font-family: var(--font-h); font-weight: 600;
+  font-size: 0.69rem; padding: 0.15rem 0.5rem; border-radius: 50px; cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.svp-banner-switch:hover { background: rgba(255,255,255,0.26); color: #fff; }
+
+/* Milestone toast */
+.svp-toast {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, calc(-50% + 10px));
+  background: rgba(0,0,0,0.80); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.14); border-radius: var(--r);
+  padding: 0.65rem 1.3rem; font-family: var(--font-h); font-weight: 600;
+  font-size: 0.9rem; color: #fff; white-space: nowrap;
+  z-index: 15; opacity: 0; pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.svp-toast.show { opacity: 1; transform: translate(-50%, -50%); }
+
+/* Nudge (shown after paused 10s) */
+.svp-nudge {
+  position: absolute; bottom: 70px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: #fff;
+  font-family: var(--font-h); font-weight: 700; font-size: 0.84rem;
+  padding: 0.6rem 1.4rem; border-radius: 50px; cursor: pointer;
+  z-index: 12; opacity: 0; pointer-events: none;
+  transition: opacity 0.4s;
+  box-shadow: 0 4px 18px rgba(42,107,63,0.52); white-space: nowrap;
+}
+.svp-nudge.show { opacity: 1; pointer-events: auto; }
+
+/* Controls overlay */
+.svp-controls {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.5) 65%, transparent 100%);
+  padding: 2.5rem 0.9rem 0.65rem;
+  opacity: 0; transition: opacity 0.25s; z-index: 9;
+}
+.svp-wrap:hover .svp-controls,
+.svp-wrap.paused .svp-controls,
+.svp-wrap.ended .svp-controls { opacity: 1; }
+
+/* Progress bar */
+.svp-progress-wrap { margin-bottom: 0.4rem; }
+.svp-progress-bg {
+  position: relative; height: 4px; background: rgba(255,255,255,0.22);
+  border-radius: 3px; cursor: pointer; margin-bottom: 0.35rem;
+  transition: height 0.12s;
+}
+.svp-progress-bg:hover { height: 7px; }
+.svp-fill {
+  position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+  background: linear-gradient(to right, #2A6B3F, #5DD888);
+  border-radius: 3px; pointer-events: none;
+  transition: width 0.08s linear;
+}
+.svp-fill::after {
+  content: ''; position: absolute; right: -5px; top: 50%; transform: translateY(-50%);
+  width: 11px; height: 11px; border-radius: 50%;
+  background: #5DD888; box-shadow: 0 0 7px rgba(93,216,136,0.75);
+  opacity: 0; transition: opacity 0.15s;
+}
+.svp-progress-bg:hover .svp-fill::after { opacity: 1; }
+
+/* Milestone dots on progress bar */
+.svp-milestone {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.3); border: 1.5px solid rgba(255,255,255,0.5);
+  pointer-events: none; transition: all 0.3s;
+}
+.svp-milestone.passed { background: #5DD888; border-color: #5DD888; box-shadow: 0 0 5px rgba(93,216,136,0.6); }
+
+/* Invisible range scrubber on top */
+.svp-scrubber {
+  position: absolute; inset: -6px 0; width: 100%; height: calc(100% + 12px);
+  opacity: 0; cursor: pointer; margin: 0;
+  -webkit-appearance: none; appearance: none;
+}
+
+/* Time row */
+.svp-time-row {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.69rem; color: rgba(255,255,255,0.62); font-family: var(--font-h);
+}
+#svp-remaining { color: #7EE8A2; font-weight: 600; font-size: 0.72rem; }
+
+/* Bottom control bar */
+.svp-bar { display: flex; align-items: center; gap: 0.6rem; }
+
+.svp-play-btn {
+  background: none; border: none; cursor: pointer; padding: 0.1rem; line-height: 0;
+  flex-shrink: 0; transition: transform 0.1s;
+}
+.svp-play-btn:hover { transform: scale(1.12); }
+.svp-play-btn .ico-pause { display: none; }
+.svp-play-btn.playing .ico-play { display: none; }
+.svp-play-btn.playing .ico-pause { display: block; }
+
+.svp-mute-btn {
+  background: none; border: none; cursor: pointer; padding: 0.1rem; line-height: 0;
+  flex-shrink: 0; opacity: 0.8; transition: opacity 0.15s;
+}
+.svp-mute-btn:hover { opacity: 1; }
+.svp-mute-btn .ico-vol-off { display: none; }
+.svp-mute-btn.muted .ico-vol-on { display: none; }
+.svp-mute-btn.muted .ico-vol-off { display: block; }
+
+.svp-speed-group { display: flex; gap: 0.25rem; margin-left: auto; }
+.svp-spd {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.65); font-family: var(--font-h); font-weight: 600;
+  font-size: 0.68rem; padding: 0.22rem 0.46rem; border-radius: 4px; cursor: pointer;
+  transition: all 0.15s; line-height: 1.4;
+}
+.svp-spd:hover { background: rgba(255,255,255,0.22); color: #fff; }
+.svp-spd.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.svp-fs-btn {
+  background: none; border: none; cursor: pointer; padding: 0.1rem; line-height: 0;
+  transition: transform 0.15s;
+}
+.svp-fs-btn:hover { transform: scale(1.1); }
+
+/* ---- ADD TO CALENDAR ---- */
+.atc-band { background: var(--accent); padding: clamp(1.25rem,4vw,2rem) clamp(1.25rem,5vw,3rem); }
+.atc-inner { max-width: 1060px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.atc-hl { font-family: var(--font-h); font-weight: 700; font-size: clamp(1rem,2.5vw,1.4rem); color: #fff; margin-bottom: 0.2rem; }
+.atc-sub { font-size: 0.875rem; color: rgba(255,255,255,0.72); }
+.atc-btn-wrap { position: relative; }
+.atc-btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 1.4rem; background: #fff; color: var(--accent-dk);
+  font-family: var(--font-h); font-weight: 700; font-size: 0.9rem;
+  border: none; border-radius: var(--r); cursor: pointer;
+  transition: background 0.15s, transform 0.15s; white-space: nowrap;
+}
+.atc-btn:hover { background: var(--bg); transform: translateY(-1px); }
+.atc-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.atc-dropdown {
+  display: none; position: absolute; top: calc(100% + 8px); right: 0;
+  background: var(--white); border: 1px solid var(--border); border-radius: var(--r);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12); min-width: 200px; overflow: hidden; z-index: 50;
+}
+.atc-dropdown.open { display: block; }
+.atc-dropdown a { display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1rem; font-size: 0.875rem; font-weight: 500; color: var(--text-1); border-bottom: 1px solid var(--border); transition: background 0.12s; }
+.atc-dropdown a:last-child { border-bottom: none; }
+.atc-dropdown a:hover { background: var(--bg); }
+.atc-dropdown a svg { width: 14px; height: 14px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+/* ---- VIDEO TESTIMONIAL ---- */
+.vtesti-section { background: var(--bg); }
+.vtesti-wrap { max-width: 760px; margin: 0 auto; padding: clamp(2.5rem,5vw,4rem) clamp(1.25rem,5vw,3rem); }
+.vtesti-frame { position: relative; border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-lg); background: #000; }
+.vtesti-frame video { width: 100%; display: block; max-height: 560px; object-fit: cover; }
+.vtesti-badge {
+  position: absolute; bottom: 1rem; left: 1rem;
+  background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.15); border-radius: var(--r);
+  padding: 0.5rem 0.85rem; display: flex; align-items: center; gap: 0.5rem;
+}
+.vtesti-badge-stars { display: flex; gap: 0.15rem; }
+.vtesti-badge-stars svg { width: 12px; height: 12px; fill: var(--gold); }
+.vtesti-badge-txt { font-size: 0.78rem; color: rgba(255,255,255,0.90); font-weight: 500; }
+
+/* ---- TRUST STATS ---- */
+.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow); }
+@media (max-width: 540px) { .stats-row { grid-template-columns: 1fr; } }
+.stat-cell { background: var(--white); padding: 1.5rem 1.25rem; text-align: center; }
+.stat-num { font-family: var(--font-h); font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.3rem; }
+.stat-lbl { font-size: 0.82rem; color: var(--text-2); line-height: 1.4; }
+
+/* ---- WRITTEN TESTIMONIALS ---- */
+.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+@media (max-width: 768px) { .testi-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .testi-grid { grid-template-columns: 1fr; } }
+.testi-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 1.4rem; display: flex; flex-direction: column; gap: 0.85rem; box-shadow: var(--shadow); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.testi-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.testi-stars { display: flex; gap: 0.2rem; }
+.testi-stars svg { width: 13px; height: 13px; fill: var(--gold); }
+.testi-quote { font-size: 0.875rem; color: var(--text-2); line-height: 1.72; font-style: italic; flex: 1; }
+.testi-quote::before { content: '\201C'; } .testi-quote::after { content: '\201D'; }
+.testi-byline { padding-top: 0.65rem; border-top: 1px solid var(--border); }
+.testi-name { font-family: var(--font-h); font-weight: 700; font-size: 0.875rem; color: var(--text-1); }
+.testi-loc { font-size: 0.72rem; color: var(--text-3); margin-top: 0.1rem; }
+
+/* ---- PHOTOS ---- */
+.photos-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.65rem; }
+@media (max-width: 900px)  { .photos-strip { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 600px)  { .photos-strip { grid-template-columns: 1fr 1fr; } }
+.photo-card { border-radius: var(--r); overflow: hidden; aspect-ratio: 4/3; background: var(--border); box-shadow: var(--shadow); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.photo-card:hover { transform: scale(1.03); box-shadow: var(--shadow-lg); }
+.photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---- FOOTER ---- */
+.site-footer { background: var(--white); border-top: 1px solid var(--border); padding: 1.5rem clamp(1.25rem,5vw,3rem); display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.site-footer span { font-size: 0.75rem; color: var(--text-3); }
+.site-footer a { font-size: 0.75rem; color: var(--text-3); transition: color 0.15s; }
+.site-footer a:hover { color: var(--text-2); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <a href="index.html" class="hdr-logo">
+    <img src="../pnglogo.png" alt="National Energy Renovations">
+  </a>
+</header>
+
+<!-- VSL VIDEO — first thing they see -->
+<section class="vsl-section">
+  <div class="wrap-video">
+    <p class="vsl-headline reveal">You're Booked!! A MUST WATCH BEFORE OUR APPOINTMENT...</p>
+
+    <!-- SMART VIDEO PLAYER -->
+    <div class="svp-wrap reveal reveal-delay-1" id="svp">
+
+      <video id="svp-video" preload="metadata" playsinline muted>
+        <source src="../Solar VSL v1.mp4" type="video/mp4">
+      </video>
+
+      <!-- Click-to-unmute overlay -->
+      <div class="svp-unmute" id="svp-unmute">
+        <button class="svp-unmute-btn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Click to Unmute
+        </button>
+      </div>
+
+      <!-- Speed savings banner -->
+      <div class="svp-speed-banner" id="svp-speed-banner">
+        <span>⚡ Watching at <strong id="svp-banner-spd">1.2×</strong> — saving you <span id="svp-saved">...</span></span>
+        <button class="svp-banner-switch" id="svp-banner-switch" onclick="svpSetSpeed(1)">Switch to 1×</button>
+      </div>
+
+      <!-- Milestone toast -->
+      <div class="svp-toast" id="svp-toast"></div>
+
+      <!-- Nudge when paused too long -->
+      <div class="svp-nudge" id="svp-nudge">▶ Resume Watching</div>
+
+      <!-- Custom controls -->
+      <div class="svp-controls" id="svp-controls">
+        <div class="svp-progress-wrap">
+          <div class="svp-progress-bg" id="svp-progress-bg">
+            <div class="svp-fill" id="svp-fill"></div>
+            <div class="svp-milestone" data-pct="25"></div>
+            <div class="svp-milestone" data-pct="50"></div>
+            <div class="svp-milestone" data-pct="75"></div>
+            <input type="range" class="svp-scrubber" id="svp-scrubber" value="0" min="0" max="100" step="0.01">
+          </div>
+          <div class="svp-time-row">
+            <span id="svp-current">0:00</span>
+            <span id="svp-remaining"></span>
+            <span id="svp-total">--:--</span>
+          </div>
+        </div>
+        <div class="svp-bar">
+          <!-- Play/Pause -->
+          <button class="svp-play-btn" id="svp-play" onclick="svpTogglePlay()">
+            <svg class="ico-play" viewBox="0 0 24 24" width="20" height="20" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg class="ico-pause" viewBox="0 0 24 24" width="20" height="20" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+          <!-- Mute -->
+          <button class="svp-mute-btn" id="svp-mute-btn" onclick="svpToggleMute()">
+            <svg class="ico-vol-on" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="rgba(255,255,255,0.82)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            <svg class="ico-vol-off" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="rgba(255,255,255,0.82)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          </button>
+          <!-- Speed -->
+          <div class="svp-speed-group">
+            <button class="svp-spd" data-spd="1"   onclick="svpSetSpeed(1)">1×</button>
+            <button class="svp-spd active" data-spd="1.2" onclick="svpSetSpeed(1.2)">1.2×</button>
+            <button class="svp-spd" data-spd="1.5" onclick="svpSetSpeed(1.5)">1.5×</button>
+            <button class="svp-spd" data-spd="2"   onclick="svpSetSpeed(2)">2×</button>
+          </div>
+          <!-- Fullscreen -->
+          <button class="svp-fs-btn" onclick="svpFullscreen()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="rgba(255,255,255,0.78)" stroke-width="2" stroke-linecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          </button>
+        </div>
+      </div>
+    </div><!-- /svp-wrap -->
+
+  </div>
+</section>
+
+<!-- ADD TO CALENDAR -->
+<div class="atc-band">
+  <div class="atc-inner">
+    <div class="atc-text">
+      <div class="atc-hl">Your consultation is booked!</div>
+      <div class="atc-sub">Add it to your calendar so you don't miss it.</div>
+    </div>
+    <div class="atc-btn-wrap">
+      <button class="atc-btn" onclick="toggleAtc()" id="atc-trigger">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Add to My Calendar
+      </button>
+      <div class="atc-dropdown" id="atc-drop">
+        <a href="#" id="atc-google" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Google Calendar
+        </a>
+        <a href="#" id="atc-ics" onclick="downloadICS(); return false;">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Apple / iCal (.ics)
+        </a>
+        <a href="#" id="atc-outlook" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Outlook
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- TRUST STATS -->
+<section style="background:var(--white);">
+  <div class="wrap-sm">
+    <div class="stats-row">
+      <div class="stat-cell reveal">
+        <div class="stat-num">5.0★</div>
+        <div class="stat-lbl">Average Google rating across NC homeowners</div>
+      </div>
+      <div class="stat-cell reveal reveal-delay-2">
+        <div class="stat-num">$0</div>
+        <div class="stat-lbl">Out of pocket to get started with solar</div>
+      </div>
+      <div class="stat-cell reveal reveal-delay-3">
+        <div class="stat-num">$400</div>
+        <div class="stat-lbl">Monthly hosting income potential per home</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- VIDEO TESTIMONIAL -->
+<section class="vtesti-section">
+  <div class="vtesti-wrap">
+    <p class="section-label reveal">Real Homeowner</p>
+    <h2 class="section-hl reveal reveal-delay-1">Hear it straight from someone who did it</h2>
+    <p class="section-sub reveal reveal-delay-2">A real NC homeowner shares their experience working with Izz and going solar.</p>
+    <div class="vtesti-frame reveal reveal-delay-3">
+      <video controls preload="metadata">
+        <source src="../video testimonial.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+      <div class="vtesti-badge">
+        <div class="vtesti-badge-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <span class="vtesti-badge-txt">Verified NC Homeowner</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- WRITTEN TESTIMONIALS -->
+<section style="background:var(--white);">
+  <div class="wrap-sm">
+    <p class="section-label reveal">Customer Reviews</p>
+    <h2 class="section-hl reveal reveal-delay-1">What NC homeowners say about working with Izz</h2>
+    <p class="section-sub reveal reveal-delay-2">Real reviews from Raleigh, Cary, Sanford, Zebulon, and beyond.</p>
+    <div class="testi-grid">
+
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="testi-quote">I have had my solar panels for little over a year now. It's been the best home modification that I have done and Izz Issa made the process so much easier too. He kept me informed, monitored the process and kept the installation on target. If you are looking for solar, look no further — make sure you ask for Izz Issa.</p>
+        <div class="testi-byline"><div class="testi-name">SDinges</div><div class="testi-loc">Raleigh, North Carolina</div></div>
+      </div>
+
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="testi-quote">My name is Ahmed Mustafa and I am a local Realtor in Raleigh NC. I do business with Izz Issa all the time and I also installed solar on my own home. Izz is always great to work with, professional and knowledgeable. He follows up with all my clients and educates them on the entire solar process. Mr. Issa is the best to go with.</p>
+        <div class="testi-byline"><div class="testi-name">Ahmed Mustafa</div><div class="testi-loc">Cary, NC · Local Realtor</div></div>
+      </div>
+
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="testi-quote">I've spoken with many different companies about solar over the past three years. Izz gave us many different options and compared products across companies. He showed us that we would be getting the best in the industry for the best price. He's been absolutely amazing throughout the entire process.</p>
+        <div class="testi-byline"><div class="testi-name">Michael Durrance</div><div class="testi-loc">Sanford, North Carolina</div></div>
+      </div>
+
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="testi-quote">Izz got things going, installation was smooth, and the system has been functioning as expected for 3 years. I recently had my roof replaced — they removed and reinstalled the panels without a hitch. Great service start to finish.</p>
+        <div class="testi-byline"><div class="testi-name">Brian K.</div><div class="testi-loc">Raleigh, North Carolina</div></div>
+      </div>
+
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="testi-quote">Izz was expertly knowledgeable about all aspects of the process. My questions were addressed efficiently and I was impressed that he revisited my property upon completion to perform the final inspection. It was a job well done.</p>
+        <div class="testi-byline"><div class="testi-name">Barbara Brown</div><div class="testi-loc">Zebulon, North Carolina</div></div>
+      </div>
+
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="testi-quote">Blue Raven installed solar for my home and also for my referrals. Everyone is fully satisfied and happy with the service, quality of workmanship, and after-sale support.</p>
+        <div class="testi-byline"><div class="testi-name">Venkata</div><div class="testi-loc">Cary, North Carolina</div></div>
+      </div>
+
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="testi-quote">Great experience!</p>
+        <div class="testi-byline"><div class="testi-name">Jeremiah Davis</div><div class="testi-loc">Wake Forest, North Carolina</div></div>
+      </div>
+
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="testi-quote">5 star service.</p>
+        <div class="testi-byline"><div class="testi-name">Sharief</div><div class="testi-loc">Garner, North Carolina</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- REAL PROJECT PHOTOS -->
+<section style="background:var(--bg);">
+  <div class="wrap-sm">
+    <p class="section-label reveal">Recent Installs</p>
+    <h2 class="section-hl reveal reveal-delay-1">Real homes. Real panels. Right here in NC.</h2>
+    <p class="section-sub reveal reveal-delay-2">Dozens of solar installations across Raleigh, the Triangle, Cary, Sanford, and Johnston County.</p>
+    <div class="photos-strip">
+      <div class="photo-card reveal"><img src="../photos/7DC41272-D0A5-4FDA-B5BF-A6C0E7B62777.png" alt="NC solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/FBF9AD2F-4D17-4BAB-9EF1-73A289C17E76.png" alt="NER Tesla EV solar home" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_8186.PNG" alt="Solar panels NC home — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7168.PNG" alt="Solar installation NC — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4933.JPG" alt="Solar panels rooftop NC — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3169.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3168.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3167.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3166.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3165.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3164.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3163.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3162.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3161.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3070.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3069.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3064.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2994.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2992.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2909.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2875.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2873.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2547.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2546.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2545.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2533.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2492.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2479.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2478.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_1453.PNG" alt="NC home solar install — NER" loading="lazy"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_9988.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_9378.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_8622.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_8615.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_8276.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_8261.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_8015.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7928.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7834.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7833.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7743.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7624.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7596.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7592.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7448.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7393.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7392.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7243.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7242.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7241.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_7045.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6974.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6829.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6804.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6749.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6694.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6693.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6462.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6293.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6038.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6037.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6036.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6035.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_6027.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_5635.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_5225.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_5191.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_5173.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_5172.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4943.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4942.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4941.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4717.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4471.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4366.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4326.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4289.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4225.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4217.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4160.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4111.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4038.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_4020.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3996.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3992.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_3748.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2103.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2082.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2073.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2002.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_2001.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_1825.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_1734.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_1729.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_1728.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_1532.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_1373.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_1366.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_1252.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_1107.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_0678.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+      <div class="photo-card reveal"><img src="../photos/IMG_0428.HEIC" alt="NC home solar install — NER" loading="lazy" onerror="this.closest('.photo-card').style.display='none'"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <span>&copy; 2026 National Energy Renovations · 11010 Lake Grove Blvd STE 100-135, Morrisville, NC 27560</span>
+  <div style="display:flex;gap:1.5rem;">
+    <a href="tel:+13365492801">336-549-2801</a>
+    <a href="index.html">Start Over</a>
+  </div>
+</footer>
+
+<script>
+/* ---- SCROLL REVEAL ---- */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ---- ADD TO CALENDAR ---- */
+function toggleAtc() { document.getElementById('atc-drop').classList.toggle('open'); }
+document.addEventListener('click', function(e) {
+  if (!document.getElementById('atc-trigger').contains(e.target))
+    document.getElementById('atc-drop').classList.remove('open');
+});
+const EVENT_TITLE    = 'Solar Consultation with Izz Issa – NER';
+const EVENT_DETAILS  = 'Free 40-minute consultation with Izz Issa at National Energy Renovations. Questions? Call or text 336-549-2801.';
+const EVENT_LOCATION = 'Phone / Remote';
+function getEventDate() { const d = new Date(); d.setDate(d.getDate() + 2); d.setHours(10,0,0,0); return d; }
+function fmt(d) { return d.toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z'; }
+const evtStart = getEventDate();
+const evtEnd   = new Date(evtStart.getTime() + 40 * 60 * 1000);
+document.getElementById('atc-google').href =
+  'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+  '&text=' + encodeURIComponent(EVENT_TITLE) +
+  '&details=' + encodeURIComponent(EVENT_DETAILS) +
+  '&location=' + encodeURIComponent(EVENT_LOCATION) +
+  '&dates=' + fmt(evtStart) + '/' + fmt(evtEnd);
+document.getElementById('atc-outlook').href =
+  'https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent' +
+  '&subject=' + encodeURIComponent(EVENT_TITLE) +
+  '&body=' + encodeURIComponent(EVENT_DETAILS) +
+  '&location=' + encodeURIComponent(EVENT_LOCATION) +
+  '&startdt=' + evtStart.toISOString() + '&enddt=' + evtEnd.toISOString();
+function downloadICS() {
+  const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//NER//Consultation//EN','BEGIN:VEVENT',
+    'UID:' + Date.now() + '@ner-solar.com','DTSTAMP:' + fmt(new Date()),
+    'DTSTART:' + fmt(evtStart),'DTEND:' + fmt(evtEnd),
+    'SUMMARY:' + EVENT_TITLE,'DESCRIPTION:' + EVENT_DETAILS,'LOCATION:' + EVENT_LOCATION,
+    'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+  a.download = 'ner-consultation.ics'; a.click();
+  document.getElementById('atc-drop').classList.remove('open');
+}
+
+/* ================================================================
+   SMART VIDEO PLAYER
+   ================================================================ */
+(function() {
+  const v        = document.getElementById('svp-video');
+  const wrap     = document.getElementById('svp');
+  const fillEl   = document.getElementById('svp-fill');
+  const scrub    = document.getElementById('svp-scrubber');
+  const curEl    = document.getElementById('svp-current');
+  const remEl    = document.getElementById('svp-remaining');
+  const totEl    = document.getElementById('svp-total');
+  const playBtn  = document.getElementById('svp-play');
+  const muteBtn  = document.getElementById('svp-mute-btn');
+  const unmuteOv = document.getElementById('svp-unmute');
+  const toastEl  = document.getElementById('svp-toast');
+  const nudgeEl  = document.getElementById('svp-nudge');
+  const banner   = document.getElementById('svp-speed-banner');
+  const bannerSpd= document.getElementById('svp-banner-spd');
+  const savedEl  = document.getElementById('svp-saved');
+  const bannerSw = document.getElementById('svp-banner-switch');
+  const msDots   = document.querySelectorAll('.svp-milestone');
+
+  let speed = 1.2;
+  let toastTimer, nudgeTimer;
+  let fired = {};
+
+  /* helpers */
+  function fmtTime(s) {
+    if (!isFinite(s) || s < 0) return '--:--';
+    s = Math.floor(s);
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  function updateSavingsBanner(dur, spd) {
+    if (!dur || spd <= 1) { banner.classList.add('hidden'); return; }
+    banner.classList.remove('hidden');
+    bannerSpd.textContent = spd + '×';
+    const s = dur * (1 - 1 / spd);
+    savedEl.textContent = s < 90 ? Math.round(s) + 's' : (s / 60).toFixed(1) + ' min';
+    bannerSw.style.display = spd === 1 ? 'none' : '';
+  }
+
+  /* set default speed */
+  v.playbackRate = speed;
+
+  /* metadata loaded */
+  v.addEventListener('loadedmetadata', function() {
+    totEl.textContent = fmtTime(v.duration);
+    updateSavingsBanner(v.duration, speed);
+    msDots.forEach(function(d) { d.style.left = d.dataset.pct + '%'; });
+  });
+
+  /* ---- AUTOPLAY (muted, fires once only) ---- */
+  var userUnmuted = false;
+  var autoObs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting && v.paused) {
+      if (!userUnmuted) v.muted = true;
+      v.play()
+        .then(function() { autoObs.unobserve(wrap); })
+        .catch(function() {});
+    }
+  }, { threshold: 0.5 });
+  autoObs.observe(wrap);
+
+  /* ---- UNMUTE ---- */
+  function doUnmute() {
+    v.muted = false;
+    unmuteOv.classList.add('hidden');
+    muteBtn.classList.remove('muted');
+    userUnmuted = true;
+  }
+  unmuteOv.addEventListener('click', doUnmute);
+
+  /* click on video body = unmute first, then toggle play */
+  wrap.addEventListener('click', function(e) {
+    if (e.target.closest('.svp-controls') || e.target.closest('.svp-nudge')) return;
+    if (!unmuteOv.classList.contains('hidden')) { doUnmute(); return; }
+    svpTogglePlay();
+  });
+
+  /* ---- PLAY / PAUSE STATE ---- */
+  v.addEventListener('play', function() {
+    playBtn.classList.add('playing');
+    wrap.classList.remove('paused', 'ended');
+    clearTimeout(nudgeTimer);
+    nudgeEl.classList.remove('show');
+  });
+
+  v.addEventListener('pause', function() {
+    playBtn.classList.remove('playing');
+    wrap.classList.add('paused');
+    if (!v.ended) {
+      nudgeTimer = setTimeout(function() { nudgeEl.classList.add('show'); }, 10000);
+    }
+  });
+
+  v.addEventListener('ended', function() {
+    playBtn.classList.remove('playing');
+    wrap.classList.add('paused', 'ended');
+    showToast('🎉 You watched it all — great job!');
+  });
+
+  /* ---- PROGRESS ---- */
+  v.addEventListener('timeupdate', function() {
+    if (!v.duration) return;
+    var pct = (v.currentTime / v.duration) * 100;
+    fillEl.style.width = pct + '%';
+    scrub.value = pct;
+    curEl.textContent = fmtTime(v.currentTime);
+    var rem = (v.duration - v.currentTime) / speed;
+    if (rem > 2) {
+      remEl.textContent = rem < 60
+        ? Math.ceil(rem) + 's left'
+        : fmtTime(rem) + ' left';
+    } else {
+      remEl.textContent = '';
+    }
+    /* milestone dots */
+    msDots.forEach(function(d) {
+      if (pct >= parseFloat(d.dataset.pct)) d.classList.add('passed');
+    });
+    /* milestone toasts */
+    if      (pct >= 90 && !fired[90]) { fired[90] = true; showToast('🔥 Almost done — just ' + Math.ceil(rem) + 's left!'); }
+    else if (pct >= 75 && !fired[75]) { fired[75] = true; showToast('💪 75% done — keep it up!'); }
+    else if (pct >= 50 && !fired[50]) { fired[50] = true; showToast('⚡ Halfway — you\'re doing great!'); }
+    else if (pct >= 25 && !fired[25]) { fired[25] = true; showToast('👍 Great start — stick with it!'); }
+  });
+
+  /* scrubber drag */
+  scrub.addEventListener('input', function() {
+    if (v.duration) v.currentTime = (scrub.value / 100) * v.duration;
+  });
+
+  /* ---- TOAST ---- */
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toastEl.classList.remove('show'); }, 2800);
+  }
+
+  /* ---- NUDGE ---- */
+  nudgeEl.addEventListener('click', function() {
+    v.play();
+    nudgeEl.classList.remove('show');
+  });
+
+  /* ---- PUBLIC API ---- */
+  window.svpTogglePlay = function() {
+    if (v.paused || v.ended) v.play(); else v.pause();
+  };
+
+  window.svpToggleMute = function() {
+    v.muted = !v.muted;
+    if (!v.muted) { unmuteOv.classList.add('hidden'); userUnmuted = true; }
+    muteBtn.classList.toggle('muted', v.muted);
+  };
+
+  window.svpSetSpeed = function(spd) {
+    speed = spd;
+    v.playbackRate = spd;
+    document.querySelectorAll('.svp-spd').forEach(function(b) {
+      b.classList.toggle('active', parseFloat(b.dataset.spd) === spd);
+    });
+    if (v.duration) updateSavingsBanner(v.duration, spd);
+  };
+
+  window.svpFullscreen = function() {
+    if (wrap.requestFullscreen) wrap.requestFullscreen();
+    else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+    else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+  };
+
+})();
+</script>
+</body>
+</html>
